@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Path Traversal Lab</title>
+  <style>
+    :root { color-scheme: dark; --bg:#0b1020; --panel:#111a2e; --line:#25324d; --text:#e7eefc; --muted:#95a5c4; --accent:#65e0b4; --danger:#ff738a; }
+    * { box-sizing:border-box }
+    body { margin:0; min-height:100vh; font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Arial; background:radial-gradient(ellipse at top,#172541 0%,var(--bg) 52%); color:var(--text); }
+    .wrap { max-width:980px; margin:0 auto; padding:48px 22px 64px; }
+    header { display:flex; align-items:center; gap:14px; margin-bottom:28px; }
+    .logo { width:48px; height:48px; border-radius:14px; display:grid; place-items:center; background:#142d38; color:var(--accent); border:1px solid #245849; font-size:22px; }
+    h1 { font-size:clamp(24px,4vw,34px); margin:0; letter-spacing:-.5px; }
+    .subtitle { color:var(--muted); margin:8px 0 0; }
+    .warning { padding:14px 16px; border:1px solid #68404d; background:#2a1723; border-radius:12px; color:#ffd1db; margin:22px 0; }
+    .grid { display:grid; grid-template-columns:1.2fr .8fr; gap:18px; }
+    .card { background:linear-gradient(180deg,#121c31,#10182a); border:1px solid var(--line); border-radius:16px; padding:22px; box-shadow:0 12px 35px #0002; }
+    h2 { margin:0 0 16px; font-size:18px; }
+    .files { display:grid; gap:10px; }
+    .file { display:flex; align-items:center; gap:12px; border:1px solid #26344f; background:#0e1627; padding:12px; border-radius:11px; }
+    .file-icon { color:#8cb6ff; font-size:19px; }
+    .file-name { font-weight:600; }
+    .file-meta { color:var(--muted); font-size:12px; margin-top:3px; }
+    form { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+    input { flex:1; min-width:180px; border:1px solid #34415f; border-radius:10px; background:#0a1120; color:var(--text); padding:12px; outline:none; }
+    input:focus { border-color:var(--accent); box-shadow:0 0 0 3px #65e0b41c; }
+    button { border:0; border-radius:10px; padding:12px 16px; font-weight:700; cursor:pointer; background:var(--accent); color:#07251c; }
+    button.safe { background:#8cb6ff; color:#101d35; }
+    .hint { color:var(--muted); font-size:13px; line-height:1.6; margin-top:14px; }
+    .pill { display:inline-flex; border:1px solid #345247; border-radius:999px; padding:5px 9px; color:var(--accent); font-size:11px; letter-spacing:.4px; margin-bottom:12px; }
+    .pill.safe { border-color:#334d74; color:#8cb6ff; }
+    footer { color:#74839f; text-align:center; margin-top:24px; font-size:12px; }
+    @media(max-width:720px) { .grid { grid-template-columns:1fr; } .wrap { padding-top:28px; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">⌁</div>
+    <div><h1>Path Traversal Lab</h1><p class="subtitle">File viewer · Security training environment</p></div>
+  </header>
+  <div class="warning"><strong>⚠ Laboratório intencionalmente vulnerável.</strong> Use apenas localmente, em ambiente de estudo.</div>
+  <div class="grid">
+    <section class="card">
+      <span class="pill">VULNERABLE DEMO</span>
+      <h2>Arquivos disponíveis</h2>
+      <div class="files">
+        {% for file in files %}
+        <div class="file"><span class="file-icon">▤</span><div><div class="file-name">{{ file }}</div><div class="file-meta">Arquivo de texto · público</div></div></div>
+        {% endfor %}
+      </div>
+      <form action="/view" method="get">
+        <input name="file" placeholder="Nome do arquivo (ex.: welcome.txt)" value="welcome.txt">
+        <button type="submit">Abrir arquivo</button>
+      </form>
+      <p class="hint">O endpoint <code>/view</code> é vulnerável: ele não valida se o caminho solicitado permanece dentro da pasta de arquivos.</p>
+    </section>
+    <section class="card">
+      <span class="pill safe">CORRIGIDO · DEMO</span>
+      <h2>Visualizador seguro</h2>
+      <p class="hint">O endpoint alternativo aplica validação de caminho e rejeita arquivos fora da pasta permitida.</p>
+      <form action="/view-safe" method="get">
+        <input name="file" placeholder="Nome do arquivo (ex.: welcome.txt)" value="welcome.txt">
+        <button class="safe" type="submit">Abrir com validação</button>
+      </form>
+      <p class="hint">Compare as respostas dos dois endpoints para entender a diferença entre código vulnerável e validação adequada.</p>
+    </section>
+  </div>
+  <footer>PATH TRAVERSAL LAB · LOCAL ONLY · USE RESPONSIVELY</footer>
+</div>
+</body>
+</html>

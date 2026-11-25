@@ -1,0 +1,2 @@
+Bem-vindo ao Path Traversal Lab!
+Este arquivo fica dentro da pasta pública do visualizador.
