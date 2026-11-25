@@ -485,7 +485,3 @@ A principal lição é que uma IA pode ir além de responder perguntas: quando r
 
 ---
 
-## 👤 Autor
-
-Projeto desenvolvido como atividade prática de estudos em cibersegurança da **Digital Innovation One (DIO)**, utilizando o DIO Agent e o Hermes Agent.
-
